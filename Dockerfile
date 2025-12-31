@@ -17,27 +17,25 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesourc
 RUN apt-get update && apt-get install -y nodejs && npm install -g yarn
 
 # ===========================
-# 3. 部署 Edge TTS (Python - Port 5050)
+# 3. 部署 Edge TTS (Python - 端口 5050)
 # ===========================
 WORKDIR /app/tts
 RUN git clone https://github.com/travisvn/openai-edge-tts.git .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # ===========================
-# 4. 部署 DeepSeek2API (Python - Port 4000)
+# 4. 部署 DeepSeek2API (Python - 端口 5001)
 # ===========================
 WORKDIR /app/deepseek
 RUN git clone https://github.com/iidamie/deepseek2api.git .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # ===========================
-# 5. 部署 QwenChat2API (Node.js - Port 3000)
+# 5. 部署 QwenChat2API (Node.js - 端口改为 3000)
 # ===========================
 WORKDIR /app/qwen
 RUN git clone https://github.com/ckcoding/qwenchat2api.git .
 RUN npm install
-# 防止端口冲突，虽然我们用环境变量覆盖，但保险起见
-ENV PORT=3000
 
 # ===========================
 # 6. 配置 Nginx 和 Supervisor
